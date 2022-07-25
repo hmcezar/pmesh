@@ -199,7 +199,7 @@ class Layout(object):
         self.comm.Barrier()
 
         # now fire
-        rt = self.comm.Alltoallv((buffer, (self.sendcounts, self.sendoffsets), dt), 
+        self.comm.Alltoallv((buffer, (self.sendcounts, self.sendoffsets), dt), 
                             (recvbuffer, (self.recvcounts, self.recvoffsets), dt))
         dt.Free()
         self.comm.Barrier()
@@ -273,9 +273,8 @@ class Layout(object):
         recvbuffer = numpy.empty(len(self.indices), dtype=dtype, order='C')
         self.comm.Barrier()
 
-
         # now fire
-        rt = self.comm.Alltoallv((data, (self.recvcounts, self.recvoffsets), dt), 
+        self.comm.Alltoallv((data, (self.recvcounts, self.recvoffsets), dt), 
                             (recvbuffer, (self.sendcounts, self.sendoffsets), dt))
         dt.Free()
         self.comm.Barrier()
